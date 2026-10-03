@@ -41,91 +41,25 @@ InterviewIQ.AI helps job seekers prepare for interviews. Pick a role and experie
 
 ## 🔄 How it works
 
-```mermaid
-flowchart LR
-    A([Sign in with Google]) --> B[Set up interview]
-    B -.optional.-> R[Upload resume]
-    R -.-> B
-    B --> C[AI generates questions]
-    C --> D[Question is spoken]
-    D --> E[You answer by voice or text]
-    E --> F[AI scores and gives feedback]
-    F -->|more questions| D
-    F -->|last question| G[Final report]
-    G --> H([History and PDF download])
-
-    style A fill:#d1fae5,stroke:#059669,color:#064e3b
-    style H fill:#d1fae5,stroke:#059669,color:#064e3b
-    style G fill:#a7f3d0,stroke:#059669,color:#064e3b
-```
+<p align="center">
+  <img src="./assets/flow.svg" alt="Interview flow: sign in, set up, question, answer, feedback, report" width="100%" />
+</p>
 
 ### One question, step by step
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor U as You
-    participant W as Web app
-    participant S as API server
-    participant L as OpenRouter (LLM)
-
-    U->>W: Start interview (role, experience, mode)
-    W->>S: POST /interview/generate-questions
-    S->>L: Generate questions
-    L-->>S: Questions
-    S-->>W: Interview and credits left
-    W-->>U: Speaks question 1, starts timer
-    U->>W: Answers by voice or text
-    W->>S: POST /interview/submit-answer
-    S->>L: Evaluate answer
-    L-->>S: Score and feedback
-    S-->>W: Feedback
-    W-->>U: Shows and speaks feedback
-    Note over U,W: Repeat for each question
-    W->>S: POST /interview/finish
-    S-->>W: Final report
-    W-->>U: Report, charts, PDF download
-```
+1. **You start an interview** by choosing a role, experience and mode (optionally uploading a resume). The web app calls `POST /interview/generate-questions`.
+2. **The API asks OpenRouter** to generate questions and returns the interview and your remaining credits.
+3. **The web app speaks question 1** and starts the timer.
+4. **You answer** by voice or text.
+5. **The web app sends your answer** to `POST /interview/submit-answer`, and the API asks OpenRouter to score it and write feedback.
+6. **You see and hear the feedback**, then move to the next question. Steps 3 to 6 repeat for every question.
+7. **After the last question** the web app calls `POST /interview/finish`, and you get the final report with charts and a PDF download.
 
 ## 🏗️ Architecture
 
-```mermaid
-flowchart TB
-    subgraph Client["Browser (React + Vite)"]
-        UI[Pages and components]
-        Store[Redux store]
-        Speech[Web Speech API]
-    end
-
-    subgraph Server["Express API (Node.js)"]
-        Auth[Auth and JWT cookie]
-        Interview[Interview controller]
-        Pay[Payment controller]
-        Upload[Resume upload - Multer]
-    end
-
-    DB[(MongoDB)]
-    FB[Firebase Auth]
-    OR[OpenRouter LLM]
-    RZ[Razorpay]
-
-    UI --> Store
-    UI --> Speech
-    UI -->|Google sign-in| FB
-    UI -->|REST + cookie| Auth
-    UI -->|REST + cookie| Interview
-    UI -->|REST + cookie| Pay
-    Interview --> Upload
-    Interview --> OR
-    Auth --> DB
-    Interview --> DB
-    Pay --> DB
-    Pay --> RZ
-    UI -->|Checkout popup| RZ
-
-    style Client fill:#ecfdf5,stroke:#10b981
-    style Server fill:#f0fdfa,stroke:#14b8a6
-```
+<p align="center">
+  <img src="./assets/architecture.svg" alt="Architecture: browser, Express API, MongoDB, OpenRouter, Razorpay and Firebase" width="100%" />
+</p>
 
 ## 🧰 Tech stack
 
@@ -157,7 +91,9 @@ InterviewIQ/
 │   ├── routes/                  # auth, user, interview, payment
 │   └── index.js
 └── assets/
-    └── banner.svg               # README banner
+    ├── banner.svg               # README banner
+    ├── flow.svg                 # interview flow diagram
+    └── architecture.svg         # architecture diagram
 ```
 
 Adjust the folder names to match your repository.
@@ -175,8 +111,8 @@ Adjust the folder names to match your repository.
 ### Install and run
 
 ```bash
-git clone <your-repo-url>
-cd InterviewIQ
+git clone https://github.com/rashidrehan12/interviewIQ.git
+cd interviewIQ
 
 # backend
 cd server
@@ -203,7 +139,6 @@ npm run dev          # http://localhost:5173
 | `MONGODB_URL` | MongoDB connection string |
 | `JWT_SECRET` | Long random string used to sign login tokens |
 | `OPENROUTER_API_KEY` | Your OpenRouter API key |
-| `CLIENT_URL` | Frontend origin allowed by CORS |
 | `RAZORPAY_KEY_ID` | Razorpay key id |
 | `RAZORPAY_KEY_SECRET` | Razorpay key secret |
 
@@ -212,7 +147,6 @@ PORT=8000
 MONGODB_URL=<your-mongodb-connection-string>
 JWT_SECRET=<a-long-random-string>
 OPENROUTER_API_KEY=<your-openrouter-api-key>
-CLIENT_URL=http://localhost:5173
 RAZORPAY_KEY_ID=<your-razorpay-key-id>
 RAZORPAY_KEY_SECRET=<your-razorpay-key-secret>
 ```
@@ -292,7 +226,7 @@ The frontend and backend are deployed as separate services on Render.
 | Frontend (`client/`) | Static Site | `npm install && npm run build` | publish `dist` |
 
 1. Add the environment variables to each service.
-2. Set `CLIENT_URL` on the backend to the exact frontend URL, with no trailing slash.
+2. In the backend CORS settings, allow the exact frontend URL, with no trailing slash.
 3. Free Render services sleep when idle, so the first request can take 30 to 60 seconds.
 
 ## 🩺 Troubleshooting
@@ -364,9 +298,9 @@ For larger changes, please open an issue first to discuss what you would like to
 
 ## 👤 Author
 
-**<Your Name>**
+**Md Rashid**
 
-[GitHub](https://github.com/your-username) · [LinkedIn](https://linkedin.com/in/your-profile)
+[GitHub](https://github.com/rashidrehan12) · [LinkedIn](https://www.linkedin.com/in/md--rashid/)
 
 ## 📄 License
 
