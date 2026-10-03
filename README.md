@@ -20,33 +20,9 @@
 
 ---
 
-## 📑 Table of contents
-
-[About](#-about) · [Screenshots](#-screenshots) · [Features](#-features) · [How it works](#-how-it-works) · [Architecture](#-architecture) · [Tech stack](#-tech-stack) · [Getting started](#-getting-started) · [Environment variables](#-environment-variables) · [API reference](#-api-reference) · [Scoring and credits](#-scoring-and-credits) · [Deployment](#-deployment) · [Troubleshooting](#-troubleshooting) · [Roadmap](#-roadmap) · [Contributing](#-contributing)
-
 ## 🎯 About
 
 InterviewIQ.AI helps job seekers prepare for interviews. Pick a role and experience level (or upload your resume), answer timed questions out loud to an AI interviewer, and finish with a scored report that shows your strengths, weak spots and a per-question breakdown.
-
-## 🖼️ Screenshots
-
-<!-- Add your own images to a screenshots/ folder, then remove the comment markers around the table. -->
-<!--
-| Home | Interview setup |
-| :---: | :---: |
-| ![Home](./screenshots/home.png) | ![Setup](./screenshots/setup.png) |
-
-| Live interview | Report |
-| :---: | :---: |
-| ![Interview](./screenshots/interview.png) | ![Report](./screenshots/report.png) |
-
-| History | Pricing |
-| :---: | :---: |
-| ![History](./screenshots/history.png) | ![Pricing](./screenshots/pricing.png) |
--->
-
-> [!TIP]
-> A short screen recording (GIF) of one full interview is the most effective thing you can add here.
 
 ## ✨ Features
 
